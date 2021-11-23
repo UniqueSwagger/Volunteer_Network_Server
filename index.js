@@ -39,6 +39,13 @@ const run = async () => {
       res.send(event);
     });
 
+    //delete any particular event
+    app.delete("/events/:id", async (req, res) => {
+      const id = req.params.id;
+      const result = await eventsCollection.deleteOne({ _id: ObjectId(id) });
+      res.send(result);
+    });
+
     //post event
     app.post("/newEvent", async (req, res) => {
       const result = await eventsCollection.insertOne(req.body);
@@ -67,7 +74,7 @@ const run = async () => {
       res.send(result);
     });
 
-    //delete any particular event
+    //delete any particular registered event
     app.delete("/registeredEvent/:id", async (req, res) => {
       const id = req.params.id;
       const result = await registerCollection.deleteOne({ _id: ObjectId(id) });
